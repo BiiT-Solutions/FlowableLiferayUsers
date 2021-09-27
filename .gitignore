@@ -1,0 +1,12 @@
+.settings
+.project
+.classpath
+gen
+target
+bin
+project.properties
+output.log
+tmp
+styles.css
+/target
+.idea
