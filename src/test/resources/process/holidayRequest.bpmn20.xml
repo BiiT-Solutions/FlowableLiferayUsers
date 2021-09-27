@@ -1,175 +1,42 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
-  <collaboration id="Collaboration">
-    <participant id="sid-5B282BC7-9BB4-455D-B182-BF50038CC3AF" name="HolidayRequest" processRef="process"/>
-  </collaboration>
-  <process id="HolidayRequest" name="HolidayRequest" isExecutable="true">
-    <laneSet id="laneSet_process">
-      <lane id="sid-3DA2F520-F72F-40B0-9F08-9458D00F7EF0" name="Automated">
-        <flowNodeRef>sid-BB32A9DB-9118-4973-AC3D-56245C3D1478</flowNodeRef>
-        <flowNodeRef>TestProces</flowNodeRef>
-        <flowNodeRef>sid-6548261A-D6AA-4337-B0C5-AC67EF1487C5</flowNodeRef>
-        <flowNodeRef>sid-98DF7E67-8EDE-439A-800A-7E851095DD64</flowNodeRef>
-        <flowNodeRef>sid-4006A7F0-B657-42EB-9266-023E4B76EFA1</flowNodeRef>
-      </lane>
-      <lane id="sid-C7DA162C-2D81-4978-8BF1-19D8ECD1C54C" name="Manager (=kermit)">
-        <flowNodeRef>sid-A328E5B5-4D8F-4401-B2D0-2DEC7183BFAA</flowNodeRef>
-        <flowNodeRef>sid-65E46333-EBBA-4BC0-9683-09F189707E61</flowNodeRef>
-      </lane>
-      <lane id="sid-E113807D-D728-4DE0-BBF0-F7804BA43D82" name="User (= fozzie)">
-        <flowNodeRef>sid-7CE4C6C2-C097-4309-B23F-CFEB526713C8</flowNodeRef>
-        <flowNodeRef>sid-9E7DD97D-411D-45D3-AD1D-BE9680F50CAD</flowNodeRef>
-        <flowNodeRef>sid-B61536A6-A814-4600-9E3F-BB91FAD0F804</flowNodeRef>
-        <flowNodeRef>sid-8EA6D223-BF18-4E23-9235-0368E84FA364</flowNodeRef>
-      </lane>
-    </laneSet>
-    <sequenceFlow id="sid-7419A48C-6ABA-4D0B-9FA6-7BD06ABF4876" sourceRef="TestProces" targetRef="sid-4006A7F0-B657-42EB-9266-023E4B76EFA1"/>
-    <sequenceFlow id="sid-9F7807D7-08F4-4239-AA1A-F64902A461D8" sourceRef="sid-A328E5B5-4D8F-4401-B2D0-2DEC7183BFAA" targetRef="sid-65E46333-EBBA-4BC0-9683-09F189707E61"/>
-    <sequenceFlow id="sid-9B3FE6A6-3317-4113-B644-4722CE2194E9" name="Yes" sourceRef="sid-65E46333-EBBA-4BC0-9683-09F189707E61" targetRef="sid-B61536A6-A814-4600-9E3F-BB91FAD0F804">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${approved == true}]]></conditionExpression>
-    </sequenceFlow>
-    <sequenceFlow id="sid-1135EF67-F998-476D-A837-0C7BFA6B2297" sourceRef="sid-B61536A6-A814-4600-9E3F-BB91FAD0F804" targetRef="sid-7CE4C6C2-C097-4309-B23F-CFEB526713C8"/>
-    <sequenceFlow id="sid-2024575B-E332-4D6F-BCC2-D993561A763B" sourceRef="sid-8EA6D223-BF18-4E23-9235-0368E84FA364" targetRef="sid-9E7DD97D-411D-45D3-AD1D-BE9680F50CAD"/>
-    <sequenceFlow id="sid-5CEB076A-C3C4-41BE-99F1-BB9FC88A3977" name="No" sourceRef="sid-65E46333-EBBA-4BC0-9683-09F189707E61" targetRef="sid-8EA6D223-BF18-4E23-9235-0368E84FA364">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${approved == false}]]></conditionExpression>
-    </sequenceFlow>
-    <sequenceFlow id="sid-801507C1-26C0-4DF6-A3AB-22DF13C6172C" sourceRef="sid-6548261A-D6AA-4337-B0C5-AC67EF1487C5" targetRef="sid-98DF7E67-8EDE-439A-800A-7E851095DD64"/>
-    <sequenceFlow id="sid-44D2D785-AAF3-43A0-BD7F-8B6C187AF9D6" name="days > 2" sourceRef="sid-98DF7E67-8EDE-439A-800A-7E851095DD64" targetRef="sid-A328E5B5-4D8F-4401-B2D0-2DEC7183BFAA">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${days > 2}]]></conditionExpression>
-    </sequenceFlow>
-    <sequenceFlow id="sid-0DEFEE55-D469-4D55-9E1D-D6361766CE41" name="days &lt;= 2" sourceRef="sid-98DF7E67-8EDE-439A-800A-7E851095DD64" targetRef="TestProces">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${days <= 2}]]></conditionExpression>
-    </sequenceFlow>
-    <scriptTask id="sid-BB32A9DB-9118-4973-AC3D-56245C3D1478" name="SetVariables" scriptFormat="JavaScript" activiti:autoStoreVariables="false">
-      <script>execution.setVariable("test", "12345");
-</script>
-    </scriptTask>
-    <serviceTask id="TestProces" name="AutoApprove Email" activiti:type="mail">
-      <extensionElements>
-        <activiti:field name="to">
-          <activiti:expression>${eMail}</activiti:expression>
-        </activiti:field>
-        <activiti:field name="subject">
-          <activiti:string><![CDATA[HolidayRequest Approval]]></activiti:string>
-        </activiti:field>
-        <activiti:field name="text">
-          <activiti:expression>Request for ${days} days on ${startDate} is approved!</activiti:expression>
-        </activiti:field>
-      </extensionElements>
-    </serviceTask>
-    <startEvent id="sid-6548261A-D6AA-4337-B0C5-AC67EF1487C5">
-      <extensionElements>
-        <activiti:formProperty id="eMail" name="eMail" type="string" expression="&quot;noreply@example.com&quot;" variable="eMail"/>
-        <activiti:formProperty id="startDate" name="startDate" type="date" expression="01-01-1900" variable="startDate"/>
-        <activiti:formProperty id="days" name="days" type="long" expression="0" variable="days"/>
-      </extensionElements>
-    </startEvent>
-    <exclusiveGateway id="sid-98DF7E67-8EDE-439A-800A-7E851095DD64"/>
-    <endEvent id="sid-4006A7F0-B657-42EB-9266-023E4B76EFA1"/>
-    <userTask id="sid-A328E5B5-4D8F-4401-B2D0-2DEC7183BFAA" name="Approve Request">
-      <extensionElements>
-        <activiti:formProperty id="approved" name="approved" type="boolean" variable="approved"/>
-      </extensionElements>
-    </userTask>
-    <exclusiveGateway id="sid-65E46333-EBBA-4BC0-9683-09F189707E61" name="Approved"/>
-    <endEvent id="sid-7CE4C6C2-C097-4309-B23F-CFEB526713C8"/>
-    <endEvent id="sid-9E7DD97D-411D-45D3-AD1D-BE9680F50CAD"/>
-    <userTask id="sid-B61536A6-A814-4600-9E3F-BB91FAD0F804" name="Send Request Approved">
-      <documentation>Hi Fozzie,
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
+             xmlns:flowable="http://flowable.org/bpmn"
+             typeLanguage="http://www.w3.org/2001/XMLSchema"
+             expressionLanguage="http://www.w3.org/1999/XPath"
+             targetNamespace="http://www.flowable.org/processdef">
 
-Your request for ${days} days on ${startDate} is approved!</documentation>
-    </userTask>
-    <userTask id="sid-8EA6D223-BF18-4E23-9235-0368E84FA364" name="Send Request Refused">
-      <documentation>Hi Fozzie,
+    <process id="HolidayRequest" name="HolidayRequest" isExecutable="true">
+        <startEvent id="startEvent"/>
+        <sequenceFlow sourceRef="startEvent" targetRef="approveTask"/>
+        <userTask id="approveTask" name="Approve or reject request"/>
+        <sequenceFlow sourceRef="approveTask" targetRef="decision"/>
 
-I'm sorry, but your request for ${days} days on ${startDate} is refused!</documentation>
-    </userTask>
-  </process>
-  <bpmndi:BPMNDiagram id="BPMNDiagram_Collaboration">
-    <bpmndi:BPMNPlane bpmnElement="Collaboration" id="BPMNPlane_Collaboration">
-      <bpmndi:BPMNShape bpmnElement="sid-5B282BC7-9BB4-455D-B182-BF50038CC3AF" id="BPMNShape_sid-5B282BC7-9BB4-455D-B182-BF50038CC3AF">
-        <omgdc:Bounds height="1074.0" width="991.0" x="77.0" y="-119.0"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="sid-3DA2F520-F72F-40B0-9F08-9458D00F7EF0" id="BPMNShape_sid-3DA2F520-F72F-40B0-9F08-9458D00F7EF0">
-        <omgdc:Bounds height="455.0" width="961.0" x="107.0" y="-119.0"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="sid-BB32A9DB-9118-4973-AC3D-56245C3D1478" id="BPMNShape_sid-BB32A9DB-9118-4973-AC3D-56245C3D1478">
-        <omgdc:Bounds height="80.0" width="100.0" x="130.0" y="225.0"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="TestProces" id="BPMNShape_TestProces">
-        <omgdc:Bounds height="80.0" width="100.0" x="450.0" y="55.0"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="sid-6548261A-D6AA-4337-B0C5-AC67EF1487C5" id="BPMNShape_sid-6548261A-D6AA-4337-B0C5-AC67EF1487C5">
-        <omgdc:Bounds height="30.0" width="30.0" x="165.0" y="80.0"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="sid-98DF7E67-8EDE-439A-800A-7E851095DD64" id="BPMNShape_sid-98DF7E67-8EDE-439A-800A-7E851095DD64">
-        <omgdc:Bounds height="40.0" width="40.0" x="315.0" y="75.0"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="sid-4006A7F0-B657-42EB-9266-023E4B76EFA1" id="BPMNShape_sid-4006A7F0-B657-42EB-9266-023E4B76EFA1">
-        <omgdc:Bounds height="28.0" width="28.0" x="690.0" y="81.0"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="sid-C7DA162C-2D81-4978-8BF1-19D8ECD1C54C" id="BPMNShape_sid-C7DA162C-2D81-4978-8BF1-19D8ECD1C54C">
-        <omgdc:Bounds height="369.0" width="961.0" x="107.0" y="336.0"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="sid-A328E5B5-4D8F-4401-B2D0-2DEC7183BFAA" id="BPMNShape_sid-A328E5B5-4D8F-4401-B2D0-2DEC7183BFAA">
-        <omgdc:Bounds height="80.0" width="100.0" x="285.0" y="390.0"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="sid-65E46333-EBBA-4BC0-9683-09F189707E61" id="BPMNShape_sid-65E46333-EBBA-4BC0-9683-09F189707E61">
-        <omgdc:Bounds height="40.0" width="40.0" x="315.0" y="551.0"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="sid-E113807D-D728-4DE0-BBF0-F7804BA43D82" id="BPMNShape_sid-E113807D-D728-4DE0-BBF0-F7804BA43D82">
-        <omgdc:Bounds height="250.0" width="961.0" x="107.0" y="705.0"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="sid-7CE4C6C2-C097-4309-B23F-CFEB526713C8" id="BPMNShape_sid-7CE4C6C2-C097-4309-B23F-CFEB526713C8">
-        <omgdc:Bounds height="28.0" width="28.0" x="690.0" y="760.0"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="sid-9E7DD97D-411D-45D3-AD1D-BE9680F50CAD" id="BPMNShape_sid-9E7DD97D-411D-45D3-AD1D-BE9680F50CAD">
-        <omgdc:Bounds height="28.0" width="28.0" x="690.0" y="881.0"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="sid-B61536A6-A814-4600-9E3F-BB91FAD0F804" id="BPMNShape_sid-B61536A6-A814-4600-9E3F-BB91FAD0F804">
-        <omgdc:Bounds height="80.0" width="100.0" x="405.0" y="734.0"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="sid-8EA6D223-BF18-4E23-9235-0368E84FA364" id="BPMNShape_sid-8EA6D223-BF18-4E23-9235-0368E84FA364">
-        <omgdc:Bounds height="80.0" width="100.0" x="405.0" y="855.0"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge bpmnElement="sid-0DEFEE55-D469-4D55-9E1D-D6361766CE41" id="BPMNEdge_sid-0DEFEE55-D469-4D55-9E1D-D6361766CE41">
-        <omgdi:waypoint x="354.5579268292683" y="95.4420731707317"/>
-        <omgdi:waypoint x="450.0" y="95.15197568389058"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="sid-5CEB076A-C3C4-41BE-99F1-BB9FC88A3977" id="BPMNEdge_sid-5CEB076A-C3C4-41BE-99F1-BB9FC88A3977">
-        <omgdi:waypoint x="335.0" y="591.0"/>
-        <omgdi:waypoint x="335.0" y="895.0"/>
-        <omgdi:waypoint x="405.0" y="895.0"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="sid-44D2D785-AAF3-43A0-BD7F-8B6C187AF9D6" id="BPMNEdge_sid-44D2D785-AAF3-43A0-BD7F-8B6C187AF9D6">
-        <omgdi:waypoint x="335.0" y="115.0"/>
-        <omgdi:waypoint x="335.0" y="390.0"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="sid-9F7807D7-08F4-4239-AA1A-F64902A461D8" id="BPMNEdge_sid-9F7807D7-08F4-4239-AA1A-F64902A461D8">
-        <omgdi:waypoint x="335.0" y="470.0"/>
-        <omgdi:waypoint x="335.0" y="551.0"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="sid-7419A48C-6ABA-4D0B-9FA6-7BD06ABF4876" id="BPMNEdge_sid-7419A48C-6ABA-4D0B-9FA6-7BD06ABF4876">
-        <omgdi:waypoint x="550.0" y="95.0"/>
-        <omgdi:waypoint x="690.0" y="95.0"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="sid-801507C1-26C0-4DF6-A3AB-22DF13C6172C" id="BPMNEdge_sid-801507C1-26C0-4DF6-A3AB-22DF13C6172C">
-        <omgdi:waypoint x="195.0" y="95.0"/>
-        <omgdi:waypoint x="315.0" y="95.0"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="sid-2024575B-E332-4D6F-BCC2-D993561A763B" id="BPMNEdge_sid-2024575B-E332-4D6F-BCC2-D993561A763B">
-        <omgdi:waypoint x="505.0" y="895.0"/>
-        <omgdi:waypoint x="690.0" y="895.0"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="sid-9B3FE6A6-3317-4113-B644-4722CE2194E9" id="BPMNEdge_sid-9B3FE6A6-3317-4113-B644-4722CE2194E9">
-        <omgdi:waypoint x="355.0" y="571.0"/>
-        <omgdi:waypoint x="455.0" y="571.0"/>
-        <omgdi:waypoint x="455.0" y="734.0"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="sid-1135EF67-F998-476D-A837-0C7BFA6B2297" id="BPMNEdge_sid-1135EF67-F998-476D-A837-0C7BFA6B2297">
-        <omgdi:waypoint x="505.0" y="774.0"/>
-        <omgdi:waypoint x="690.0" y="774.0"/>
-      </bpmndi:BPMNEdge>
-    </bpmndi:BPMNPlane>
-  </bpmndi:BPMNDiagram>
+        <exclusiveGateway id="decision"/>
+        <sequenceFlow sourceRef="decision" targetRef="externalSystemCall">
+            <conditionExpression xsi:type="tFormalExpression">
+                <![CDATA[${approved}]]>
+            </conditionExpression>
+        </sequenceFlow>
+        <sequenceFlow sourceRef="decision" targetRef="sendRejectionMail">
+            <conditionExpression xsi:type="tFormalExpression">
+                <![CDATA[${!approved}]]>
+            </conditionExpression>
+        </sequenceFlow>
+
+        <serviceTask id="externalSystemCall" name="Enter holidays in external system"
+                     flowable:class="org.flowable.CallExternalSystemDelegate"/>
+        <sequenceFlow sourceRef="externalSystemCall" targetRef="holidayApprovedTask"/>
+        <userTask id="holidayApprovedTask" name="Holiday approved"/>
+        <sequenceFlow sourceRef="holidayApprovedTask" targetRef="approveEnd"/>
+        <serviceTask id="sendRejectionMail" name="Send out rejection email"
+                     flowable:class="org.flowable.SendRejectionMail"/>
+        <sequenceFlow sourceRef="sendRejectionMail" targetRef="rejectEnd"/>
+        <endEvent id="approveEnd"/>
+        <endEvent id="rejectEnd"/>
+    </process>
 </definitions>
