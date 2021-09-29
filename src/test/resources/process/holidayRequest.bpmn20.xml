@@ -10,7 +10,7 @@
              expressionLanguage="http://www.w3.org/1999/XPath"
              targetNamespace="http://www.flowable.org/processdef">
 
-    <process id="HolidayRequest" name="HolidayRequest" isExecutable="true">
+    <process id="holidayRequest" name="Holiday Request" isExecutable="true">
         <startEvent id="startEvent"/>
         <sequenceFlow sourceRef="startEvent" targetRef="approveTask"/>
         <userTask id="approveTask" name="Approve or reject request"/>
@@ -36,6 +36,7 @@
         <serviceTask id="sendRejectionMail" name="Send out rejection email"
                      flowable:class="org.flowable.SendRejectionMail"/>
         <sequenceFlow sourceRef="sendRejectionMail" targetRef="rejectEnd"/>
+
         <endEvent id="approveEnd"/>
         <endEvent id="rejectEnd"/>
     </process>

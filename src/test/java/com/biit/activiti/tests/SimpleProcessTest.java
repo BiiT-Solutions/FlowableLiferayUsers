@@ -29,7 +29,7 @@ import javax.inject.Inject;
 @Test(groups = "activitiTasks")
 public class SimpleProcessTest extends AbstractTransactionalTestNGSpringContextTests {
 	private static final String ONE_TASK_PROCESS_NAME = "oneTaskProcess";
-	private static final String HOLIDAY_PROCESS_NAME = "HolidayRequest";
+	private static final String HOLIDAY_PROCESS_NAME = "holidayRequest";
 	private static final String HOLIDAY_PROCESS_APPROVE_TASK_NAME = "Approve Request";
 	private static final String HOLIDAY_PROCESS_APPROVE_TASK_2_NAME = "Send Request Approved";
 	private static final String HOLIDAY_PROCESS_APPROVE_TASK_USER = "kermit";

@@ -21,7 +21,7 @@ import org.testng.annotations.Test;
 @Test(groups = "ownerTasks")
 public class TenancyTest extends AbstractTransactionalTestNGSpringContextTests {
 
-	private static final String HOLIDAY_PROCESS_NAME = "HolidayRequest";
+	private static final String HOLIDAY_PROCESS_NAME = "holidayRequest";
 	private static final String HOLIDAY_PROCESS_TENANCY_1 = "orbis";
 	private static final String HOLIDAY_PROCESS_TENANCY_2 = "usmo";
 

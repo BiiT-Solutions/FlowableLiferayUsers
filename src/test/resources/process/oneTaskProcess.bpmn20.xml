@@ -4,7 +4,7 @@
   xmlns:flowable="http://flowable.org/bpmn"
   targetNamespace="Examples">
 
-  <process id="oneTaskProcess" name="oneTaskProcess">
+  <process id="oneTaskProcess" name="one Task Process">
   
     <startEvent id="theStart" />
     <sequenceFlow id="flow1" sourceRef="theStart" targetRef="theTask" />

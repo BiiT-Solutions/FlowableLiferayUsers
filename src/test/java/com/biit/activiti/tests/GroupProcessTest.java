@@ -27,7 +27,7 @@ import org.testng.annotations.Test;
 @ContextConfiguration({ "classpath:applicationContext.xml" })
 @Test(groups = "activitiGroupTasks")
 public class GroupProcessTest extends AbstractTransactionalTestNGSpringContextTests {
-	private static final String HOLIDAY_PROCESS_NAME = "HolidayRequest";
+	private static final String HOLIDAY_PROCESS_NAME = "holidayRequest";
 	private static final String HOLIDAY_PROCESS_APPROVE_TASK_USER = "sam@test.com";
 	private static final String HOLIDAY_PROCESS_APPROVE_TASK_GROUP = "usmo_physiotherapist";
 

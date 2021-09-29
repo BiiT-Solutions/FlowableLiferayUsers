@@ -22,7 +22,7 @@ import org.testng.annotations.Test;
 @ContextConfiguration({ "classpath:applicationContext.xml" })
 @Test(groups = "ownerTasks")
 public class OwnerTaskTest extends AbstractTransactionalTestNGSpringContextTests {
-	private static final String HOLIDAY_PROCESS_NAME = "HolidayRequest";
+	private static final String HOLIDAY_PROCESS_NAME = "holidayRequest";
 	private static final String HOLIDAY_PROCESS_APPROVE_TASK_USER = "sam@test.com";
 	private static final String HOLIDAY_PROCESS_APPROVE_TASK_OWNER = "orbis";
 
