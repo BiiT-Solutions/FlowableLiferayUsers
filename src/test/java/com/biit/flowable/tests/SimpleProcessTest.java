@@ -1,4 +1,4 @@
-package com.biit.activiti.tests;
+package com.biit.flowable.tests;
 
 import java.util.HashMap;
 import java.util.List;
@@ -143,7 +143,8 @@ public class SimpleProcessTest extends AbstractTransactionalTestNGSpringContextT
 		Assert.assertNotNull(processInstance);
 
 		// Check if a task is available for the given process
-		Assert.assertEquals(0, taskService.createTaskQuery().processInstanceId(processInstance.getId()).count());
+		// Assert.assertEquals(0, taskService.createTaskQuery().processInstanceId(processInstance.getId()).count());
+		 Assert.assertEquals(1, taskService.createTaskQuery().processInstanceId(processInstance.getId()).count());
 	}
 
 	/**

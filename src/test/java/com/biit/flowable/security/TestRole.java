@@ -1,9 +1,9 @@
-package com.biit.activiti.security;
+package com.biit.flowable.security;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import com.biit.activiti.groups.GroupType;
+import com.biit.flowable.groups.GroupType;
 
 public enum TestRole {
 
@@ -14,20 +14,20 @@ public enum TestRole {
 
 	PHYSIOTHERAPIST("usmo_physiotherapist", GroupType.ASSIGNMENT);
 
-	private GroupType activitiGroup;
+	private GroupType flowableGroup;
 	private String liferayName;
 
-	TestRole(String liferayName, GroupType activitiGroup) {
+	TestRole(String liferayName, GroupType flowableGroup) {
 		this.liferayName = liferayName;
-		this.activitiGroup = activitiGroup;
+		this.flowableGroup = flowableGroup;
 	}
 
 	public String getLiferayName() {
 		return liferayName;
 	}
 
-	public GroupType getActivitiGroup() {
-		return activitiGroup;
+	public GroupType getFlowableGroup() {
+		return flowableGroup;
 	}
 
 	public static TestRole get(String liferayName) {
@@ -42,7 +42,7 @@ public enum TestRole {
 	public static Set<TestRole> get(GroupType type) {
 		Set<TestRole> roles = new HashSet<>();
 		for (TestRole role : values()) {
-			if (role.getActivitiGroup().equals(type)) {
+			if (role.getFlowableGroup().equals(type)) {
 				roles.add(role);
 			}
 		}

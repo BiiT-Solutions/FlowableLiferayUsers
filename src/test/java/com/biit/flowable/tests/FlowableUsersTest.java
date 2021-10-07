@@ -1,7 +1,8 @@
-package com.biit.activiti.tests;
+package com.biit.flowable.tests;
 
 
 import org.flowable.engine.IdentityService;
+import org.flowable.engine.impl.IdentityServiceImpl;
 import org.flowable.engine.ProcessEngine;
 //import org.flowable.engine.identity.User;
 import org.flowable.idm.api.User;
@@ -13,22 +14,23 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.testng.annotations.Test;
 
+
 import javax.inject.Inject;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({ "classpath:applicationContext.xml" })
 @Test(groups = "activitiUsers")
-public class ActivitiUsersTest extends AbstractTransactionalTestNGSpringContextTests {
-	private final static String USER_ID = "23376";
+public class FlowableUsersTest extends AbstractTransactionalTestNGSpringContextTests {
+	private final static String USER_ID = "20735";
 	private final static String USER_EMAIL = "sam@test.com";
 	private final static String USER_FIRST_NAME = "Sam";
 	private final static String USER_LAST_NAME = "Max";
 
-	@Inject
+	@Autowired
 	private ProcessEngine processEngine;
 
 	@Test
-	public void getLiferayUserAsActiviti() {
+	public void getLiferayUserAsFlowable() {
 		Assert.assertNotNull(processEngine);
 		IdentityService identityService = processEngine.getIdentityService();
 		Assert.assertNotNull(identityService);
@@ -40,10 +42,11 @@ public class ActivitiUsersTest extends AbstractTransactionalTestNGSpringContextT
 	}
 
 	@Test
-	public void getLiferayUserAsActivitiByEmail() {
+	public void getLiferayUserAsFlowableByEmail() {
 		Assert.assertNotNull(processEngine);
-		IdentityService identityService = processEngine.getIdentityService();
+		IdentityService identityService =  processEngine.getIdentityService();
 		Assert.assertNotNull(identityService);
+
 
 		User user = identityService.createUserQuery().userEmail(USER_EMAIL).singleResult();
 		Assert.assertNotNull(user);

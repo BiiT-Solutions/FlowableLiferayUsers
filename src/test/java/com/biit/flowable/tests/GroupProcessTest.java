@@ -1,4 +1,4 @@
-package com.biit.activiti.tests;
+package com.biit.flowable.tests;
 
 import java.util.HashMap;
 import java.util.Map;

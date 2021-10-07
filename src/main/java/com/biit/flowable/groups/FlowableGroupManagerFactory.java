@@ -1,4 +1,4 @@
-package com.biit.activiti.groups;
+package com.biit.flowable.groups;
 
 import org.flowable.common.engine.impl.interceptor.CommandContext;
 import org.flowable.common.engine.impl.interceptor.Session;
@@ -11,7 +11,7 @@ import com.biit.usermanager.security.IAuthenticationService;
 import com.biit.usermanager.security.IAuthorizationService;
 
 @Service
-public class ActivitiGroupManagerFactory implements SessionFactory {
+public class FlowableGroupManagerFactory implements SessionFactory {
 
 	@Autowired
 	private IAuthorizationService<Long, Long, Long> authorizationService;
@@ -33,7 +33,7 @@ public class ActivitiGroupManagerFactory implements SessionFactory {
 	}
 
 	public Session openSession() {
-		return (Session) new ActivitiGroupManager(authorizationService, authenticationService, groupToActivityConverter);
+		return (Session) new FlowableGroupManager(authorizationService, authenticationService, groupToActivityConverter);
 	}
 
 }

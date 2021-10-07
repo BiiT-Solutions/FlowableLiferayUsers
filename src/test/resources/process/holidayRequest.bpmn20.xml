@@ -13,7 +13,7 @@
     <process id="holidayRequest" name="Holiday Request" isExecutable="true">
         <startEvent id="startEvent"/>
         <sequenceFlow sourceRef="startEvent" targetRef="approveTask"/>
-        <userTask id="approveTask" name="Approve or reject request"/>
+        <userTask id="approveTask" name="Approve Request"/> <!-- name="Approved or reject request-->
         <sequenceFlow sourceRef="approveTask" targetRef="decision"/>
 
         <exclusiveGateway id="decision"/>
@@ -31,7 +31,7 @@
         <serviceTask id="externalSystemCall" name="Enter holidays in external system"
                      flowable:class="org.flowable.CallExternalSystemDelegate"/>
         <sequenceFlow sourceRef="externalSystemCall" targetRef="holidayApprovedTask"/>
-        <userTask id="holidayApprovedTask" name="Holiday approved"/>
+        <userTask id="holidayApprovedTask" name="Send Request Approved"/> <!-- name="Holiday approved-->
         <sequenceFlow sourceRef="holidayApprovedTask" targetRef="approveEnd"/>
         <serviceTask id="sendRejectionMail" name="Send out rejection email"
                      flowable:class="org.flowable.SendRejectionMail"/>

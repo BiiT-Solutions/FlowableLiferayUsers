@@ -36,7 +36,7 @@
 		<org.testng.version>6.8.7</org.testng.version>
 		<log4j.version>1.2.17</log4j.version>
 		<maven-release-plugin.version>2.5.1</maven-release-plugin.version>
-		<flowable.version>6.6.0</flowable.version>
+		<flowable.version>6.7.0</flowable.version>
 		<org.springframework.version>5.3.10</org.springframework.version>
 		<aspectj.version>1.8.2</aspectj.version>
 		<javax-servlet.version>3.0.1</javax-servlet.version>
@@ -67,6 +67,21 @@
 			<artifactId>flowable-spring</artifactId>
 			<version>${flowable.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.flowable</groupId>
+			<artifactId>flowable5-spring</artifactId>
+			<version>${flowable.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.flowable</groupId>
+			<artifactId>flowable5-spring-compatibility</artifactId>
+			<version>${flowable.version}</version>
+		</dependency>
+
+
+
+
+
 		<!-- Liferay Authentication -->
 		<dependency>
 			<groupId>com.biit.liferay</groupId>
@@ -193,6 +208,8 @@
 			<version>${javax-servlet.version}</version>
 			<scope>provided</scope>
 		</dependency>
+
+
 		<dependency>
 			<groupId>com.fasterxml.jackson.module</groupId>
 			<artifactId>jackson-module-scala_2.11</artifactId>

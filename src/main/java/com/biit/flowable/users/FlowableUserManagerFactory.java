@@ -1,4 +1,4 @@
-package com.biit.activiti.users;
+package com.biit.flowable.users;
 
 // import org.flowable.engine.impl.interceptor.Session;
 import org.flowable.common.engine.impl.interceptor.CommandContext;
@@ -10,12 +10,12 @@ import org.flowable.idm.engine.impl.persistence.entity.UserEntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.biit.activiti.groups.IGroupToActivityRoleConverter;
+import com.biit.flowable.groups.IGroupToActivityRoleConverter;
 import com.biit.usermanager.security.IAuthenticationService;
 import com.biit.usermanager.security.IAuthorizationService;
 
 @Service
-public class ActivitiUserManagerFactory implements SessionFactory {
+public class FlowableUserManagerFactory implements SessionFactory {
 
 	@Autowired
 	private IAuthorizationService<Long, Long, Long> authorizationService;
@@ -36,6 +36,6 @@ public class ActivitiUserManagerFactory implements SessionFactory {
 
 
 	public Session openSession() {
-		return (Session) new ActivitiUserManager(authorizationService, authenticationService, groupToActivityConverter);
+		return (Session) new LiferayUserManager(authorizationService, authenticationService, groupToActivityConverter);
 	}
 }

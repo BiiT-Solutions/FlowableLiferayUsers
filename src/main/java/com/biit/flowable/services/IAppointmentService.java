@@ -1,4 +1,4 @@
-package com.biit.activiti.services;
+package com.biit.flowable.services;
 
 public class IAppointmentService {
 

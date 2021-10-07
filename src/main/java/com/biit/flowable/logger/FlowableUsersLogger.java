@@ -1,12 +1,12 @@
-package com.biit.activiti.logger;
+package com.biit.flowable.logger;
 
 import org.apache.log4j.Logger;
 
 import com.biit.logger.BiitLogger;
 
-public class ActivitiUsersLogger extends BiitLogger{
+public class FlowableUsersLogger extends BiitLogger{
 	
-	private static Logger logger = Logger.getLogger(ActivitiUsersLogger.class);
+	private static Logger logger = Logger.getLogger(FlowableUsersLogger.class);
 	
 	/**
 	 * Events that have business meaning (i.e. creating category, deleting form, ...). To follow user actions.

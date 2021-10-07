@@ -21,7 +21,7 @@
 
     <!-- Scan for beans -->
     <context:component-scan
-            base-package="com.biit.activiti.groups, com.biit.activiti.users, com.biit.liferay.access, com.biit.activiti.security, com.biit.liferay.security"/>
+            base-package="com.biit.flowable.groups, com.biit.flowable.users, com.biit.liferay.access, com.biit.flowable.security, com.biit.liferay.security"/>
 
     <bean
             class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"/>
@@ -123,14 +123,15 @@
     <bean id="processEngineConfiguration" class="org.flowable.spring.SpringProcessEngineConfiguration">
         <property name="transactionManager" ref="flowableTransactionManager"/>
         <property name="dataSource" ref="flowableDataSource"/>
+        <property name="asyncExecutorActivate" value="false" />
         <property name="databaseType" value="mysql"/>
         <!--<property name="jobExecutorActivate" value="false" />-->
         <property name="databaseSchemaUpdate" value="${hibernate.hbm2ddl.auto}"/>
         <!-- <property name="history" value="full" /> -->
         <property name="customSessionFactories">
             <list>
-                <bean class="com.biit.activiti.users.ActivitiUserManagerFactory"/>
-                <bean class="com.biit.activiti.groups.ActivitiGroupManagerFactory"/>
+                <bean class="com.biit.flowable.users.FlowableUserManagerFactory"/>
+                <bean class="com.biit.flowable.groups.FlowableGroupManagerFactory"/>
             </list>
         </property>
         <property name="deploymentResources" value="classpath*:/process/*.bpmn20.xml"/>
@@ -139,7 +140,11 @@
         <property name="mailServerDefaultFrom" value="noreply@biit-solutions.com"/>
         <property name="mailServerUsername" value="noreply@biit-solutions.com"/>
         <property name="mailServerPassword" value="N0r3pl@2048"/>
+        <property name="flowable5CompatibilityEnabled" value="true" />
+        <property name="flowable5CompatibilityHandlerFactory" ref="flowable5CompatibilityFactory" />
     </bean>
+
+    <bean id="flowable5CompatibilityFactory" class="org.activiti.compatibility.spring.SpringFlowable5CompatibilityHandlerFactory" />
 
     <bean id="flowableRule" class="org.flowable.engine.test.FlowableRule">
         <property name="processEngine" ref="processEngine"/>

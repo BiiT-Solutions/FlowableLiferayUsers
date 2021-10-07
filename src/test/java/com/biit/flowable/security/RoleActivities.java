@@ -1,4 +1,4 @@
-package com.biit.activiti.security;
+package com.biit.flowable.security;
 
 import java.util.HashSet;
 import java.util.Set;

@@ -1,4 +1,4 @@
-package com.biit.activiti.groups;
+package com.biit.flowable.groups;
 
 public enum GroupType {
 

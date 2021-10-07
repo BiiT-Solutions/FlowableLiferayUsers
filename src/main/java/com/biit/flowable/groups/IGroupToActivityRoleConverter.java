@@ -1,4 +1,4 @@
-package com.biit.activiti.groups;
+package com.biit.flowable.groups;
 
 import java.util.Set;
 
@@ -15,7 +15,7 @@ public interface IGroupToActivityRoleConverter {
 	 * @param liferayRole liferayRole
 	 * @return GroupType
 	 */
-	GroupType getActivitiGroup(IRole<Long> liferayRole);
+	GroupType getFlowableGroup(IRole<Long> liferayRole);
 
 	/**
 	 * Creates a unique group name from a Liferay role. This can be the role name, or in the case of multitenancy, a
@@ -30,10 +30,10 @@ public interface IGroupToActivityRoleConverter {
 	 * Gets the Liferay equivalence role from an Activiti group. Must exactly do the inverse process of
 	 * {@link #getGroupName(IRole<Long>), getGroupName}.
 	 * 
-	 * @param activitiGroupName name of the activiti group
+	 * @param flowableGroupName name of the activiti group
 	 * @return string that represents the equivalence role from an activity group
 	 */
-	String getRoleName(String activitiGroupName);
+	String getRoleName(String flowableGroupName);
 
 	/**
 	 * Gets all available roles from Liferay. The list only must include all roles that can be use with the application.

@@ -1,4 +1,4 @@
-package com.biit.activiti.groups;
+package com.biit.flowable.groups;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +30,7 @@ import org.flowable.idm.engine.delegate.event.impl.FlowableIdmEventBuilder;
 import org.flowable.idm.engine.impl.GroupQueryImpl;
 import org.flowable.idm.engine.impl.persistence.entity.data.GroupDataManager;
 
-import com.biit.activiti.logger.ActivitiUsersLogger;
+import com.biit.flowable.logger.FlowableUsersLogger;
 import com.biit.usermanager.entity.IRole;
 import com.biit.usermanager.entity.IUser;
 import com.biit.usermanager.security.IAuthenticationService;
@@ -39,56 +39,56 @@ import com.biit.usermanager.security.exceptions.RoleDoesNotExistsException;
 import com.biit.usermanager.security.exceptions.UserManagementException;
 
 /**
- * Allows the use of Liferay Roles as Activiti groups.
+ * Allows the use of Liferay Roles as Flowable groups.
  */
-public class ActivitiGroupManager implements GroupEntityManager {
+public class FlowableGroupManager implements GroupEntityManager {
 
 	private IAuthorizationService<Long, Long, Long> authorizationService;
 	private IAuthenticationService<Long, Long> authenticationService;
 	private IGroupToActivityRoleConverter groupToActivityConverter;
 
-	public ActivitiGroupManager(IAuthorizationService<Long, Long, Long> authorizationService, IAuthenticationService<Long, Long> authenticationService,
+	public FlowableGroupManager(IAuthorizationService<Long, Long, Long> authorizationService, IAuthenticationService<Long, Long> authenticationService,
 			IGroupToActivityRoleConverter groupToActivityConverter) {
 		this.authorizationService = authorizationService;
 		this.authenticationService = authenticationService;
 		this.groupToActivityConverter = groupToActivityConverter;
 	}
 
-	public static GroupEntityImpl getActivitiGroup(IRole<Long> liferayRole, IGroupToActivityRoleConverter liferayToActivity) {
-		GroupEntityImpl activitiGroup = new GroupEntityImpl();
-		activitiGroup.setName(liferayToActivity.getGroupName(liferayRole));
-		activitiGroup.setType(liferayToActivity.getActivitiGroup(liferayRole).getType());
-		activitiGroup.setId(liferayRole.getUniqueId() + "");
-		activitiGroup.setRevision(0);
+	public static GroupEntityImpl getFlowableGroup(IRole<Long> liferayRole, IGroupToActivityRoleConverter liferayToActivity) {
+		GroupEntityImpl flowableGroup = new GroupEntityImpl();
+		flowableGroup.setName(liferayToActivity.getGroupName(liferayRole));
+		flowableGroup.setType(liferayToActivity.getFlowableGroup(liferayRole).getType());
+		flowableGroup.setId(liferayRole.getUniqueId() + "");
+		flowableGroup.setRevision(0);
 
-		return activitiGroup;
+		return flowableGroup;
 	}
 
 	public GroupEntityImpl findGroupById(String roleId) {
 		try {
 			IRole<Long> liferayUser = authorizationService.getRole(Long.parseLong(roleId));
-			return getActivitiGroup(liferayUser, groupToActivityConverter);
+			return getFlowableGroup(liferayUser, groupToActivityConverter);
 		} catch (NumberFormatException | UserManagementException | RoleDoesNotExistsException e) {
-			ActivitiUsersLogger.errorMessage(this.getClass().getName(), e);
+			FlowableUsersLogger.errorMessage(this.getClass().getName(), e);
 		}
 		return null;
 	}
 
 	@Override
 	public List<Group> findGroupsByUser(String userId) {
-		List<Group> activitiGroups = new ArrayList<>();
+		List<Group> flowableGroups = new ArrayList<>();
 
 		IUser<Long> liferayUser;
 		try {
 			liferayUser = authenticationService.getUserById(Long.parseLong(userId));
 			Set<IRole<Long>> liferayRoles = authorizationService.getUserRoles(liferayUser);
 			for (IRole<Long> liferayRole : liferayRoles) {
-				activitiGroups.add(ActivitiGroupManager.getActivitiGroup(liferayRole, groupToActivityConverter));
+				flowableGroups.add(FlowableGroupManager.getFlowableGroup(liferayRole, groupToActivityConverter));
 			}
 		} catch (NumberFormatException | UserManagementException e) {
-			ActivitiUsersLogger.errorMessage(this.getClass().getName(), e);
+			FlowableUsersLogger.errorMessage(this.getClass().getName(), e);
 		}
-		return activitiGroups;
+		return flowableGroups;
 	}
 
 	@Override
@@ -133,8 +133,8 @@ public class ActivitiGroupManager implements GroupEntityManager {
 	}
 
 
-	public List<org.flowable.idm.api.Group> findGroupByQueryCriteria(GroupQueryImpl query, Page page) {
-		List<org.flowable.idm.api.Group> groupList = new ArrayList<org.flowable.idm.api.Group>();
+	public List<Group> findGroupByQueryCriteria(GroupQueryImpl query, Page page) {
+		List<Group> groupList = new ArrayList<org.flowable.idm.api.Group>();
 		GroupQueryImpl groupQuery = (GroupQueryImpl) query;
 		if (!StringUtils.isEmpty(groupQuery.getId())) {
 			groupList.add(findGroupById(groupQuery.getId()));
@@ -142,10 +142,10 @@ public class ActivitiGroupManager implements GroupEntityManager {
 		}
 		if (!StringUtils.isEmpty(groupQuery.getName())) {
 			try {
-				groupList.add(getActivitiGroup(authorizationService.getRole(groupToActivityConverter.getRoleName(groupQuery.getName())),
+				groupList.add(getFlowableGroup(authorizationService.getRole(groupToActivityConverter.getRoleName(groupQuery.getName())),
 						groupToActivityConverter));
 			} catch (UserManagementException | RoleDoesNotExistsException e) {
-				ActivitiUsersLogger.errorMessage(this.getClass().getName(), e);
+				FlowableUsersLogger.errorMessage(this.getClass().getName(), e);
 			}
 			return groupList;
 		} else if (!StringUtils.isEmpty(groupQuery.getUserId())) {
@@ -154,13 +154,13 @@ public class ActivitiGroupManager implements GroupEntityManager {
 		} else if (!StringUtils.isEmpty(groupQuery.getType())) {
 			Set<IRole<Long>> roles = groupToActivityConverter.getRoles(GroupType.getGroupType(groupQuery.getType()));
 			for (IRole<Long> role : roles) {
-				groupList.add(getActivitiGroup(role, groupToActivityConverter));
+				groupList.add(getFlowableGroup(role, groupToActivityConverter));
 			}
 			return groupList;
 		} else {
 			Set<IRole<Long>> liferayRoles = groupToActivityConverter.getAllRoles();
 			for (IRole<Long> liferayRole : liferayRoles) {
-				groupList.add(getActivitiGroup(liferayRole, groupToActivityConverter));
+				groupList.add(getFlowableGroup(liferayRole, groupToActivityConverter));
 			}
 			return groupList;
 		}
@@ -172,7 +172,7 @@ public class ActivitiGroupManager implements GroupEntityManager {
 	}
 
 	@Override
-	public boolean isNewGroup(org.flowable.idm.api.Group activitiGroup) {
+	public boolean isNewGroup(Group flowableGroup) {
 		return false;
 	}
 
