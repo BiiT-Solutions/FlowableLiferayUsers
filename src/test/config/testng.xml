@@ -1,11 +1,11 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite thread-count="1" verbose="1" name="ActivitiTest">
-	<test name="ActivitiTest" enabled="true" preserve-order="true">
+<suite thread-count="1" verbose="1" name="FlowableTest">
+	<test name="FlowableTest" enabled="true" preserve-order="true">
 		<groups>
 			<run>
-				<include name="activitiTasks" />
-				<include name="activitiGroupTasks" />
-				<include name="activitiUsers" />
+				<include name="flowableTasks" />
+				<include name="flowableGroupTasks" />
+				<include name="flowableUsers" />
 				<include name="ownerTasks" />
 				<include name="tenancy" />
 				<include name="tenancyAsVariable" />

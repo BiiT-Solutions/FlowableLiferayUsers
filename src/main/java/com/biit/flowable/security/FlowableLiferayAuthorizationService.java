@@ -8,7 +8,7 @@ import org.flowable.idm.api.User;
 
 import com.liferay.portal.model.Role;
 
-public interface ActivitiLiferayAuthorizationService {
+public interface FlowableLiferayAuthorizationService {
 
 	Set<Role> AgetLiferayUserRoles(User liferayUser);
 

@@ -19,7 +19,7 @@ import javax.inject.Inject;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({ "classpath:applicationContext.xml" })
-@Test(groups = "activitiUsers")
+@Test(groups = "flowableUsers")
 public class FlowableUsersTest extends AbstractTransactionalTestNGSpringContextTests {
 	private final static String USER_ID = "20735";
 	private final static String USER_EMAIL = "sam@test.com";

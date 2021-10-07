@@ -25,7 +25,7 @@ import org.testng.annotations.Test;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({ "classpath:applicationContext.xml" })
-@Test(groups = "activitiGroupTasks")
+@Test(groups = "flowableGroupTasks")
 public class GroupProcessTest extends AbstractTransactionalTestNGSpringContextTests {
 	private static final String HOLIDAY_PROCESS_NAME = "holidayRequest";
 	private static final String HOLIDAY_PROCESS_APPROVE_TASK_USER = "sam@test.com";

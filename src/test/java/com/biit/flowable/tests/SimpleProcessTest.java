@@ -26,7 +26,7 @@ import javax.inject.Inject;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({ "classpath:applicationContext.xml" })
-@Test(groups = "activitiTasks")
+@Test(groups = "flowableTasks")
 public class SimpleProcessTest extends AbstractTransactionalTestNGSpringContextTests {
 	private static final String ONE_TASK_PROCESS_NAME = "oneTaskProcess";
 	private static final String HOLIDAY_PROCESS_NAME = "holidayRequest";
