@@ -128,9 +128,9 @@
         <!--<property name="jobExecutorActivate" value="false" />-->
         <property name="databaseSchemaUpdate" value="${hibernate.hbm2ddl.auto}"/>
         <!-- <property name="history" value="full" /> -->
-        <!--<property name="idmIdentityService">
-            <bean class="com.biit.flowable.services.CustomIdmIdentityService"/>
-        </property>-->
+        <property name="identityService">
+            <bean class="com.biit.flowable.services.CustomIdentityService"/>
+        </property>
         <property name="customSessionFactories">
             <list>
                 <bean class="com.biit.flowable.users.FlowableUserManagerFactory"/>
