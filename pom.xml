@@ -51,8 +51,8 @@
 		<version-jackson>2.9.4</version-jackson>
 		<project.scm.id>git</project.scm.id>
 		<!-- BiiT Dependencies -->
-		<liferay-authentication-client.version>[0.9,0.10)</liferay-authentication-client.version>
-		<liferay-service-common.version>[0.8,0.9)</liferay-service-common.version>
+		<liferay-authentication-client.version>[1.0,1.1)</liferay-authentication-client.version>
+		<liferay-service-common.version>[1.0,1.1)</liferay-service-common.version>
 	</properties>
 
 	<dependencies>
@@ -253,8 +253,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>${maven-compiler-plugin.version}</version>
 				<configuration>
-					<source>7</source>
-					<target>7</target>
+					<source>8</source>
+					<target>8</target>
 				</configuration>
 			</plugin>
 			<plugin>

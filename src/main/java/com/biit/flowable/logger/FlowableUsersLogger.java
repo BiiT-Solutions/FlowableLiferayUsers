@@ -14,7 +14,7 @@ public class FlowableUsersLogger extends BiitLogger{
 	 * @param message to be displayed
 	 */
 	public static void info(String className, String message) {
-		info(logger, className, message);
+		info((org.slf4j.Logger) logger, className, message);
 	}
 
 	/**
@@ -24,7 +24,7 @@ public class FlowableUsersLogger extends BiitLogger{
 	 * @param message
 	 */
 	public static void warning(String className, String message) {
-		warning(logger, className + ": " + message);
+		warning((org.slf4j.Logger) logger, className + ": " + message);
 	}
 
 	/**
@@ -34,7 +34,7 @@ public class FlowableUsersLogger extends BiitLogger{
 	 * @param message 
 	 */
 	public static void debug(String className, String message) {
-		debug(logger, className, message);
+		debug((org.slf4j.Logger) logger, className, message);
 	}
 
 	/**
@@ -44,7 +44,7 @@ public class FlowableUsersLogger extends BiitLogger{
 	 * @param message
 	 */
 	public static void severe(String className, String message) {
-		severe(logger, className, message);
+		severe((org.slf4j.Logger) logger, className, message);
 	}
 
 	/**
@@ -55,7 +55,7 @@ public class FlowableUsersLogger extends BiitLogger{
 	 * @param throwable
 	 */
 	public static void errorMessage(String className, Throwable throwable) {
-		errorMessageNotification(logger, className, BiitLogger.getStackTrace(throwable));
+		errorMessageNotification((org.slf4j.Logger) logger, className, BiitLogger.getStackTrace(throwable));
 	}
 
 }
