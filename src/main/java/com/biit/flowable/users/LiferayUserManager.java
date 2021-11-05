@@ -1,25 +1,5 @@
 package com.biit.flowable.users;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-//import org.flowable.engine.identity.Picture;
-import org.flowable.idm.api.PasswordEncoder;
-import org.flowable.idm.api.PasswordSalt;
-import org.flowable.idm.api.Picture;
-import org.flowable.common.engine.impl.Page;
-import org.flowable.idm.engine.impl.UserQueryImpl;
-import org.flowable.idm.api.UserQuery;
-import org.flowable.idm.engine.IdmEngineConfiguration;
-import org.flowable.idm.engine.impl.UserQueryImpl;
-//import org.flowable.engine.impl.persistence.entity.IdentityInfoEntity;
-import org.flowable.idm.engine.impl.persistence.entity.*;
-//import org.flowable.engine.impl.persistence.entity.UserEntity;
-//import org.flowable.engine.impl.persistence.entity.UserEntityManager;
-import org.flowable.idm.engine.impl.persistence.entity.data.UserDataManager;
-import org.springframework.util.StringUtils;
 
 import com.biit.flowable.groups.FlowableGroupManager;
 import com.biit.flowable.groups.IGroupToActivityRoleConverter;
@@ -33,8 +13,22 @@ import com.biit.usermanager.security.exceptions.InvalidCredentialsException;
 import com.biit.usermanager.security.exceptions.UserDoesNotExistException;
 import com.biit.usermanager.security.exceptions.UserManagementException;
 import com.liferay.portal.model.User;
-import org.flowable.common.engine.impl.persistence.entity.EntityManager;
-import org.flowable.idm.engine.impl.persistence.entity.data.UserDataManager;
+import org.flowable.engine.common.impl.Page;
+import org.flowable.idm.api.PasswordEncoder;
+import org.flowable.idm.api.PasswordSalt;
+import org.flowable.idm.api.Picture;
+import org.flowable.idm.api.UserQuery;
+import org.flowable.idm.engine.impl.UserQueryImpl;
+import org.flowable.idm.engine.impl.persistence.entity.IdentityInfoEntity;
+import org.flowable.idm.engine.impl.persistence.entity.UserEntity;
+import org.flowable.idm.engine.impl.persistence.entity.UserEntityImpl;
+import org.flowable.idm.engine.impl.persistence.entity.UserEntityManager;
+import org.springframework.util.StringUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Allows the use of Liferay User in Flowable.
@@ -277,7 +271,6 @@ public class LiferayUserManager implements UserEntityManager{
 
 	public Picture getUserPicture(String userId) {
 		return null;
-
 	}
 
 	public void setUserPicture(String userId, Picture picture) {
