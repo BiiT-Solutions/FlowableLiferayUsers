@@ -1,35 +1,5 @@
 package com.biit.flowable.groups;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
-//import org.flowable.engine.identity.GroupQuery;
-import org.flowable.idm.api.GroupQuery;
-//import org.flowable.engine.impl.GroupQueryImpl;
-import org.flowable.idm.engine.impl.GroupQueryImpl;
-import org.flowable.common.engine.impl.Page;
-//import otg.flowable.engine.impl.Page
-//import org.flowable.engine.impl.persistence.entity.GroupEntity;
-import org.flowable.idm.engine.impl.persistence.entity.GroupEntity;
-import org.flowable.idm.engine.impl.persistence.entity.GroupEntityImpl;
-//import org.flowable.engine.impl.persistence.entity.GroupEntityManager;
-import org.flowable.idm.engine.impl.persistence.entity.GroupEntityManager;
-import org.flowable.idm.engine.impl.persistence.entity.GroupEntityManagerImpl;
-import org.springframework.util.StringUtils;
-
-
-import java.util.List;
-import java.util.Map;
-
-import org.flowable.idm.api.Group;
-import org.flowable.idm.api.GroupQuery;
-import org.flowable.idm.api.event.FlowableIdmEventType;
-import org.flowable.idm.engine.IdmEngineConfiguration;
-import org.flowable.idm.engine.delegate.event.impl.FlowableIdmEventBuilder;
-import org.flowable.idm.engine.impl.GroupQueryImpl;
-import org.flowable.idm.engine.impl.persistence.entity.data.GroupDataManager;
-
 import com.biit.flowable.logger.FlowableUsersLogger;
 import com.biit.usermanager.entity.IRole;
 import com.biit.usermanager.entity.IUser;
@@ -37,6 +7,19 @@ import com.biit.usermanager.security.IAuthenticationService;
 import com.biit.usermanager.security.IAuthorizationService;
 import com.biit.usermanager.security.exceptions.RoleDoesNotExistsException;
 import com.biit.usermanager.security.exceptions.UserManagementException;
+import org.flowable.engine.common.impl.Page;
+import org.flowable.idm.api.Group;
+import org.flowable.idm.api.GroupQuery;
+import org.flowable.idm.engine.impl.GroupQueryImpl;
+import org.flowable.idm.engine.impl.persistence.entity.GroupEntity;
+import org.flowable.idm.engine.impl.persistence.entity.GroupEntityImpl;
+import org.flowable.idm.engine.impl.persistence.entity.GroupEntityManager;
+import org.springframework.util.StringUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Allows the use of Liferay Roles as Flowable groups.

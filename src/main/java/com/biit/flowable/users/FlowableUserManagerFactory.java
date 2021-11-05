@@ -2,10 +2,10 @@ package com.biit.flowable.users;
 
 // import org.flowable.engine.impl.interceptor.Session;
 
-import org.flowable.common.engine.impl.interceptor.CommandContext;
-import org.flowable.common.engine.impl.interceptor.Session;
+import org.flowable.engine.common.impl.interceptor.CommandContext;
+import org.flowable.engine.common.impl.interceptor.Session;
 //import org.flowable.engine.impl.interceptor.SessionFactory;
-import org.flowable.common.engine.impl.interceptor.SessionFactory;
+import org.flowable.engine.common.impl.interceptor.SessionFactory;
 import org.flowable.idm.engine.impl.persistence.entity.UserEntityManager;
 //import org.flowable.idm.engine.impl.persistence.entity.UserIdentityManager;
 import org.springframework.beans.factory.annotation.Autowired;

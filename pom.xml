@@ -36,8 +36,8 @@
 		<org.testng.version>6.8.7</org.testng.version>
 		<log4j.version>1.2.17</log4j.version>
 		<maven-release-plugin.version>2.5.1</maven-release-plugin.version>
-		<flowable.version>6.7.0</flowable.version>
-		<org.springframework.version>5.3.10</org.springframework.version>
+		<flowable.version>6.3.0</flowable.version>
+		<org.springframework.version>4.3.16.RELEASE</org.springframework.version>
 		<aspectj.version>1.8.2</aspectj.version>
 		<javax-servlet.version>3.0.1</javax-servlet.version>
 		<hibernate.version>5.2.17.Final</hibernate.version>
