@@ -29,10 +29,6 @@ public class FlowableGroupManagerFactory implements SessionFactory {
 
 	@Override
 	public Session openSession(CommandContext commandContext) {
-		return null;
-	}
-
-	public Session openSession() {
 		return (Session) new FlowableGroupManager(authorizationService, authenticationService, groupToActivityConverter);
 	}
 
