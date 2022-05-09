@@ -1,19 +1,14 @@
 package com.biit.flowable.users;
 
-// import org.flowable.engine.impl.interceptor.Session;
-
-import org.flowable.engine.common.impl.interceptor.CommandContext;
-import org.flowable.engine.common.impl.interceptor.Session;
-//import org.flowable.engine.impl.interceptor.SessionFactory;
-import org.flowable.engine.common.impl.interceptor.SessionFactory;
-import org.flowable.idm.engine.impl.persistence.entity.UserEntityManager;
-//import org.flowable.idm.engine.impl.persistence.entity.UserIdentityManager;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.biit.flowable.groups.IGroupToActivityRoleConverter;
 import com.biit.usermanager.security.IAuthenticationService;
 import com.biit.usermanager.security.IAuthorizationService;
+import org.flowable.common.engine.impl.interceptor.CommandContext;
+import org.flowable.common.engine.impl.interceptor.Session;
+import org.flowable.common.engine.impl.interceptor.SessionFactory;
+import org.flowable.idm.engine.impl.persistence.entity.UserEntityManager;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class FlowableUserManagerFactory implements SessionFactory {
@@ -32,6 +27,6 @@ public class FlowableUserManagerFactory implements SessionFactory {
 
     @Override
     public Session openSession(CommandContext commandContext) {
-        return (Session) new LiferayUserManager(authorizationService, authenticationService, groupToActivityConverter);
+        return new LiferayUserManager(authorizationService, authenticationService, groupToActivityConverter);
     }
 }

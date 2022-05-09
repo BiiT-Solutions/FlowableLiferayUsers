@@ -7,7 +7,8 @@ import com.biit.usermanager.security.IAuthenticationService;
 import com.biit.usermanager.security.IAuthorizationService;
 import com.biit.usermanager.security.exceptions.RoleDoesNotExistsException;
 import com.biit.usermanager.security.exceptions.UserManagementException;
-import org.flowable.engine.common.impl.Page;
+import org.flowable.common.engine.impl.Page;
+import org.flowable.common.engine.impl.interceptor.Session;
 import org.flowable.idm.api.Group;
 import org.flowable.idm.api.GroupQuery;
 import org.flowable.idm.engine.impl.GroupQueryImpl;
@@ -24,196 +25,206 @@ import java.util.Set;
 /**
  * Allows the use of Liferay Roles as Flowable groups.
  */
-public class FlowableGroupManager implements GroupEntityManager {
+public class FlowableGroupManager implements GroupEntityManager, Session {
 
-	private IAuthorizationService<Long, Long, Long> authorizationService;
-	private IAuthenticationService<Long, Long> authenticationService;
-	private IGroupToActivityRoleConverter groupToActivityConverter;
+    private IAuthorizationService<Long, Long, Long> authorizationService;
+    private IAuthenticationService<Long, Long> authenticationService;
+    private IGroupToActivityRoleConverter groupToActivityConverter;
 
-	public FlowableGroupManager(IAuthorizationService<Long, Long, Long> authorizationService, IAuthenticationService<Long, Long> authenticationService,
-			IGroupToActivityRoleConverter groupToActivityConverter) {
-		this.authorizationService = authorizationService;
-		this.authenticationService = authenticationService;
-		this.groupToActivityConverter = groupToActivityConverter;
-	}
+    public FlowableGroupManager(IAuthorizationService<Long, Long, Long> authorizationService, IAuthenticationService<Long, Long> authenticationService,
+                                IGroupToActivityRoleConverter groupToActivityConverter) {
+        this.authorizationService = authorizationService;
+        this.authenticationService = authenticationService;
+        this.groupToActivityConverter = groupToActivityConverter;
+    }
 
-	public static GroupEntityImpl getFlowableGroup(IRole<Long> liferayRole, IGroupToActivityRoleConverter liferayToActivity) {
-		GroupEntityImpl flowableGroup = new GroupEntityImpl();
-		flowableGroup.setName(liferayToActivity.getGroupName(liferayRole));
-		flowableGroup.setType(liferayToActivity.getFlowableGroup(liferayRole).getType());
-		flowableGroup.setId(liferayRole.getUniqueId() + "");
-		flowableGroup.setRevision(0);
+    public static GroupEntityImpl getFlowableGroup(IRole<Long> liferayRole, IGroupToActivityRoleConverter liferayToActivity) {
+        GroupEntityImpl flowableGroup = new GroupEntityImpl();
+        flowableGroup.setName(liferayToActivity.getGroupName(liferayRole));
+        flowableGroup.setType(liferayToActivity.getFlowableGroup(liferayRole).getType());
+        flowableGroup.setId(liferayRole.getUniqueId() + "");
+        flowableGroup.setRevision(0);
 
-		return flowableGroup;
-	}
+        return flowableGroup;
+    }
 
-	public GroupEntityImpl findGroupById(String roleId) {
-		try {
-			IRole<Long> liferayUser = authorizationService.getRole(Long.parseLong(roleId));
-			return getFlowableGroup(liferayUser, groupToActivityConverter);
-		} catch (NumberFormatException | UserManagementException | RoleDoesNotExistsException e) {
-			FlowableUsersLogger.errorMessage(this.getClass().getName(), e);
-		}
-		return null;
-	}
+    public GroupEntityImpl findGroupById(String roleId) {
+        try {
+            IRole<Long> liferayUser = authorizationService.getRole(Long.parseLong(roleId));
+            return getFlowableGroup(liferayUser, groupToActivityConverter);
+        } catch (NumberFormatException | UserManagementException | RoleDoesNotExistsException e) {
+            FlowableUsersLogger.errorMessage(this.getClass().getName(), e);
+        }
+        return null;
+    }
 
-	@Override
-	public List<Group> findGroupsByUser(String userId) {
-		List<Group> flowableGroups = new ArrayList<>();
+    @Override
+    public List<Group> findGroupsByUser(String userId) {
+        List<Group> flowableGroups = new ArrayList<>();
 
-		IUser<Long> liferayUser;
-		try {
-			liferayUser = authenticationService.getUserById(Long.parseLong(userId));
-			Set<IRole<Long>> liferayRoles = authorizationService.getUserRoles(liferayUser);
-			for (IRole<Long> liferayRole : liferayRoles) {
-				flowableGroups.add(FlowableGroupManager.getFlowableGroup(liferayRole, groupToActivityConverter));
-			}
-		} catch (NumberFormatException | UserManagementException e) {
-			FlowableUsersLogger.errorMessage(this.getClass().getName(), e);
-		}
-		return flowableGroups;
-	}
+        IUser<Long> liferayUser;
+        try {
+            liferayUser = authenticationService.getUserById(Long.parseLong(userId));
+            Set<IRole<Long>> liferayRoles = authorizationService.getUserRoles(liferayUser);
+            for (IRole<Long> liferayRole : liferayRoles) {
+                flowableGroups.add(FlowableGroupManager.getFlowableGroup(liferayRole, groupToActivityConverter));
+            }
+        } catch (NumberFormatException | UserManagementException e) {
+            FlowableUsersLogger.errorMessage(this.getClass().getName(), e);
+        }
+        return flowableGroups;
+    }
 
-	@Override
-	public List<Group> findGroupsByNativeQuery(Map<String, Object> map) {
-		return null;
-	}
+    @Override
+    public List<Group> findGroupsByNativeQuery(Map<String, Object> map) {
+        return null;
+    }
 
-	@Override
-	public long findGroupCountByNativeQuery(Map<String, Object> map) {
-		return 0;
-	}
+    @Override
+    public long findGroupCountByNativeQuery(Map<String, Object> map) {
+        return 0;
+    }
 
-	@Override
-	public Group createNewGroup(String groupId) {
-		throw new UnsupportedOperationException();
-	}
-
-
-	public void insertGroup(Group group) {
-		throw new UnsupportedOperationException();
-	}
+    @Override
+    public Group createNewGroup(String groupId) {
+        throw new UnsupportedOperationException();
+    }
 
 
-	public void updateGroup(Group updatedGroup) {
-		throw new UnsupportedOperationException();
-	}
+    public void insertGroup(Group group) {
+        throw new UnsupportedOperationException();
+    }
 
 
-	public void deleteGroup(String groupId) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public GroupQuery createNewGroupQuery() {
-		//return super.createNewGroupQuery();
-		return null;
-	}
-
-	@Override
-	public List<Group> findGroupByQueryCriteria(GroupQueryImpl groupQuery) {
-		return null;
-	}
+    public void updateGroup(Group updatedGroup) {
+        throw new UnsupportedOperationException();
+    }
 
 
-	public List<Group> findGroupByQueryCriteria(GroupQueryImpl query, Page page) {
-		List<Group> groupList = new ArrayList<org.flowable.idm.api.Group>();
-		GroupQueryImpl groupQuery = (GroupQueryImpl) query;
-		if (!StringUtils.isEmpty(groupQuery.getId())) {
-			groupList.add(findGroupById(groupQuery.getId()));
-			return groupList;
-		}
-		if (!StringUtils.isEmpty(groupQuery.getName())) {
-			try {
-				groupList.add(getFlowableGroup(authorizationService.getRole(groupToActivityConverter.getRoleName(groupQuery.getName())),
-						groupToActivityConverter));
-			} catch (UserManagementException | RoleDoesNotExistsException e) {
-				FlowableUsersLogger.errorMessage(this.getClass().getName(), e);
-			}
-			return groupList;
-		} else if (!StringUtils.isEmpty(groupQuery.getUserId())) {
-			groupList.addAll(findGroupsByUser(groupQuery.getUserId()));
-			return groupList;
-		} else if (!StringUtils.isEmpty(groupQuery.getType())) {
-			Set<IRole<Long>> roles = groupToActivityConverter.getRoles(GroupType.getGroupType(groupQuery.getType()));
-			for (IRole<Long> role : roles) {
-				groupList.add(getFlowableGroup(role, groupToActivityConverter));
-			}
-			return groupList;
-		} else {
-			Set<IRole<Long>> liferayRoles = groupToActivityConverter.getAllRoles();
-			for (IRole<Long> liferayRole : liferayRoles) {
-				groupList.add(getFlowableGroup(liferayRole, groupToActivityConverter));
-			}
-			return groupList;
-		}
-	}
+    public void deleteGroup(String groupId) {
+        throw new UnsupportedOperationException();
+    }
 
-	@Override
-	public long findGroupCountByQueryCriteria(GroupQueryImpl query) {
-		return findGroupByQueryCriteria(query, null).size();
-	}
+    @Override
+    public GroupQuery createNewGroupQuery() {
+        //return super.createNewGroupQuery();
+        return null;
+    }
 
-	@Override
-	public boolean isNewGroup(Group flowableGroup) {
-		return false;
-	}
+    @Override
+    public List<Group> findGroupByQueryCriteria(GroupQueryImpl groupQuery) {
+        return null;
+    }
 
-	@Override
-	public List<Group> findGroupsByPrivilegeId(String s) {
-		return null;
-	}
 
-	public IAuthorizationService<Long, Long, Long> getAuthorizationService() {
-		return authorizationService;
-	}
+    public List<Group> findGroupByQueryCriteria(GroupQueryImpl query, Page page) {
+        List<Group> groupList = new ArrayList<org.flowable.idm.api.Group>();
+        GroupQueryImpl groupQuery = (GroupQueryImpl) query;
+        if (!StringUtils.isEmpty(groupQuery.getId())) {
+            groupList.add(findGroupById(groupQuery.getId()));
+            return groupList;
+        }
+        if (!StringUtils.isEmpty(groupQuery.getName())) {
+            try {
+                groupList.add(getFlowableGroup(authorizationService.getRole(groupToActivityConverter.getRoleName(groupQuery.getName())),
+                        groupToActivityConverter));
+            } catch (UserManagementException | RoleDoesNotExistsException e) {
+                FlowableUsersLogger.errorMessage(this.getClass().getName(), e);
+            }
+            return groupList;
+        } else if (!StringUtils.isEmpty(groupQuery.getUserId())) {
+            groupList.addAll(findGroupsByUser(groupQuery.getUserId()));
+            return groupList;
+        } else if (!StringUtils.isEmpty(groupQuery.getType())) {
+            Set<IRole<Long>> roles = groupToActivityConverter.getRoles(GroupType.getGroupType(groupQuery.getType()));
+            for (IRole<Long> role : roles) {
+                groupList.add(getFlowableGroup(role, groupToActivityConverter));
+            }
+            return groupList;
+        } else {
+            Set<IRole<Long>> liferayRoles = groupToActivityConverter.getAllRoles();
+            for (IRole<Long> liferayRole : liferayRoles) {
+                groupList.add(getFlowableGroup(liferayRole, groupToActivityConverter));
+            }
+            return groupList;
+        }
+    }
 
-	public void setAuthorizationService(IAuthorizationService<Long, Long, Long> authorizationService) {
-		this.authorizationService = authorizationService;
-	}
+    @Override
+    public long findGroupCountByQueryCriteria(GroupQueryImpl query) {
+        return findGroupByQueryCriteria(query, null).size();
+    }
 
-	@Override
-	public GroupEntity create() {
-		return null;
-	}
+    @Override
+    public boolean isNewGroup(Group flowableGroup) {
+        return false;
+    }
 
-	@Override
-	public GroupEntity findById(String s) {
-		return null;
-	}
+    @Override
+    public List<Group> findGroupsByPrivilegeId(String s) {
+        return null;
+    }
 
-	@Override
-	public void insert(GroupEntity entity) {
+    public IAuthorizationService<Long, Long, Long> getAuthorizationService() {
+        return authorizationService;
+    }
 
-	}
+    public void setAuthorizationService(IAuthorizationService<Long, Long, Long> authorizationService) {
+        this.authorizationService = authorizationService;
+    }
 
-	@Override
-	public void insert(GroupEntity entity, boolean b) {
+    @Override
+    public GroupEntity create() {
+        return null;
+    }
 
-	}
+    @Override
+    public GroupEntity findById(String s) {
+        return null;
+    }
 
-	@Override
-	public GroupEntity update(GroupEntity entity) {
-		return null;
-	}
+    @Override
+    public void insert(GroupEntity entity) {
 
-	@Override
-	public GroupEntity update(GroupEntity entity, boolean b) {
-		return null;
-	}
+    }
 
-	@Override
-	public void delete(String s) {
+    @Override
+    public void insert(GroupEntity entity, boolean b) {
 
-	}
+    }
 
-	@Override
-	public void delete(GroupEntity entity) {
+    @Override
+    public GroupEntity update(GroupEntity entity) {
+        return null;
+    }
 
-	}
+    @Override
+    public GroupEntity update(GroupEntity entity, boolean b) {
+        return null;
+    }
 
-	@Override
-	public void delete(GroupEntity entity, boolean b) {
+    @Override
+    public void delete(String s) {
 
-	}
+    }
+
+    @Override
+    public void delete(GroupEntity entity) {
+
+    }
+
+    @Override
+    public void delete(GroupEntity entity, boolean b) {
+
+    }
+
+    @Override
+    public void flush() {
+
+    }
+
+    @Override
+    public void close() {
+
+    }
 }

@@ -10,3 +10,5 @@ tmp
 styles.css
 /target
 .idea
+*.iml
+*.log

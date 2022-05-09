@@ -4,12 +4,12 @@ package com.biit.flowable.tests;
 import org.flowable.engine.IdentityService;
 import org.flowable.engine.ProcessEngine;
 import org.flowable.idm.api.User;
-import org.junit.Assert;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 @RunWith(SpringJUnit4ClassRunner.class)
