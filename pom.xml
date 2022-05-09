@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.biit</groupId>
     <artifactId>flowable-liferay-users</artifactId>
     <packaging>jar</packaging>
-    <version>0.6.7-SNAPSHOT</version>
+    <version>0.6.7</version>
     <name>Liferay users in Flowable</name>
 
     <parent>
         <groupId>com.biit</groupId>
         <artifactId>versions</artifactId>
         <version>[0,1)</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath /> <!-- lookup parent from repository -->
     </parent>
 
     <distributionManagement>
@@ -32,7 +31,7 @@
     <scm>
         <connection>scm:git:git.biit-solutions.com:BiiT/FlowableLiferayUsers.git</connection>
         <developerConnection>scm:git:git.biit-solutions.com:BiiT/FlowableLiferayUsers.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>flowable-liferay-users-0.6.7</tag>
     </scm>
 
     <dependencies>
