@@ -5,7 +5,7 @@
     <groupId>com.biit</groupId>
     <artifactId>flowable-liferay-users</artifactId>
     <packaging>jar</packaging>
-    <version>0.6.31-SNAPSHOT</version>
+    <version>0.6.31</version>
     <name>Liferay users in Flowable</name>
 
     <parent>
@@ -31,7 +31,7 @@
     <scm>
         <connection>scm:git:git.biit-solutions.com:BiiT/FlowableLiferayUsers.git</connection>
         <developerConnection>scm:git:git.biit-solutions.com:BiiT/FlowableLiferayUsers.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>flowable-liferay-users-0.6.31</tag>
     </scm>
 
     <dependencies>
