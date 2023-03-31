@@ -5,7 +5,9 @@ import com.biit.usermanager.entity.IRole;
 import com.biit.usermanager.entity.IUser;
 import com.biit.usermanager.security.IAuthenticationService;
 import com.biit.usermanager.security.IAuthorizationService;
+import com.biit.usermanager.security.exceptions.InvalidCredentialsException;
 import com.biit.usermanager.security.exceptions.RoleDoesNotExistsException;
+import com.biit.usermanager.security.exceptions.UserDoesNotExistException;
 import com.biit.usermanager.security.exceptions.UserManagementException;
 import org.flowable.common.engine.impl.Page;
 import org.flowable.common.engine.impl.interceptor.Session;
@@ -52,7 +54,8 @@ public class FlowableGroupManager implements GroupEntityManager, Session {
         try {
             IRole<Long> liferayUser = authorizationService.getRole(Long.parseLong(roleId));
             return getFlowableGroup(liferayUser, groupToActivityConverter);
-        } catch (NumberFormatException | UserManagementException | RoleDoesNotExistsException e) {
+        } catch (NumberFormatException | UserManagementException | RoleDoesNotExistsException |
+                 InvalidCredentialsException e) {
             FlowableUsersLogger.errorMessage(this.getClass().getName(), e);
         }
         return null;
@@ -69,7 +72,8 @@ public class FlowableGroupManager implements GroupEntityManager, Session {
             for (IRole<Long> liferayRole : liferayRoles) {
                 flowableGroups.add(FlowableGroupManager.getFlowableGroup(liferayRole, groupToActivityConverter));
             }
-        } catch (NumberFormatException | UserManagementException e) {
+        } catch (NumberFormatException | UserManagementException | UserDoesNotExistException |
+                 InvalidCredentialsException e) {
             FlowableUsersLogger.errorMessage(this.getClass().getName(), e);
         }
         return flowableGroups;
@@ -128,7 +132,7 @@ public class FlowableGroupManager implements GroupEntityManager, Session {
             try {
                 groupList.add(getFlowableGroup(authorizationService.getRole(groupToActivityConverter.getRoleName(groupQuery.getName())),
                         groupToActivityConverter));
-            } catch (UserManagementException | RoleDoesNotExistsException e) {
+            } catch (UserManagementException | RoleDoesNotExistsException | InvalidCredentialsException e) {
                 FlowableUsersLogger.errorMessage(this.getClass().getName(), e);
             }
             return groupList;

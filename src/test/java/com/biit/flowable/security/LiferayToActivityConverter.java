@@ -3,6 +3,7 @@ package com.biit.flowable.security;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.biit.usermanager.security.exceptions.InvalidCredentialsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +32,7 @@ public class LiferayToActivityConverter implements IGroupToActivityRoleConverter
 		for (TestRole testRole : TestRole.get(type)) {
 			try {
 				roles.add(authorizationService.getRole(testRole.getLiferayName()));
-			} catch (UserManagementException | RoleDoesNotExistsException e) {
+			} catch (UserManagementException | RoleDoesNotExistsException | InvalidCredentialsException e) {
 				FlowableUsersLogger.errorMessage(this.getClass().getName(), e);
 			}
 		}
@@ -44,7 +45,7 @@ public class LiferayToActivityConverter implements IGroupToActivityRoleConverter
 		for (TestRole role : TestRole.values()) {
 			try {
 				roles.add(authorizationService.getRole(role.getLiferayName()));
-			} catch (UserManagementException | RoleDoesNotExistsException e) {
+			} catch (UserManagementException | RoleDoesNotExistsException | InvalidCredentialsException e) {
 				FlowableUsersLogger.errorMessage(this.getClass().getName(), e);
 			}
 		}

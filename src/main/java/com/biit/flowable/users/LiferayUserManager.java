@@ -6,6 +6,7 @@ import com.biit.flowable.groups.IGroupToActivityRoleConverter;
 import com.biit.flowable.logger.FlowableUsersLogger;
 import com.biit.usermanager.entity.IRole;
 import com.biit.usermanager.entity.IUser;
+import com.biit.usermanager.security.IActivityManager;
 import com.biit.usermanager.security.IAuthenticationService;
 import com.biit.usermanager.security.IAuthorizationService;
 import com.biit.usermanager.security.exceptions.AuthenticationRequired;
@@ -36,8 +37,8 @@ import java.util.Set;
  */
 public class LiferayUserManager implements UserEntityManager, Session {
     private IAuthorizationService<Long, Long, Long> authorizationService;
-    private IAuthenticationService<Long, Long> authenticationService;
-    private IGroupToActivityRoleConverter groupToActivityConverter;
+    private final IAuthenticationService<Long, Long> authenticationService;
+    private final IGroupToActivityRoleConverter groupToActivityConverter;
 
 
     public LiferayUserManager(IAuthorizationService<Long, Long, Long> authorizationService, IAuthenticationService<Long, Long> authenticationService,
@@ -76,8 +77,8 @@ public class LiferayUserManager implements UserEntityManager, Session {
         try {
             IUser<Long> liferayUser = authenticationService.getUserById(Long.parseLong(userId));
             return getFlowableUser(liferayUser);
-        } catch (NumberFormatException | UserManagementException e) {
-            e.printStackTrace();
+        } catch (NumberFormatException | UserManagementException | UserDoesNotExistException |
+                 InvalidCredentialsException e) {
             FlowableUsersLogger.errorMessage(this.getClass().getName(), e);
         }
         return null;
@@ -87,7 +88,8 @@ public class LiferayUserManager implements UserEntityManager, Session {
         try {
             IUser<Long> liferayUser = authenticationService.getUserByEmail(userEmail);
             return getFlowableUser(liferayUser);
-        } catch (NumberFormatException | UserManagementException | UserDoesNotExistException e) {
+        } catch (NumberFormatException | UserManagementException | UserDoesNotExistException |
+                 InvalidCredentialsException e) {
             FlowableUsersLogger.errorMessage(this.getClass().getName(), e);
         }
         return null;
@@ -129,7 +131,8 @@ public class LiferayUserManager implements UserEntityManager, Session {
             for (IRole<Long> liferayRole : liferayRoles) {
                 flowableGroups.add(FlowableGroupManager.getFlowableGroup(liferayRole, groupToActivityConverter));
             }
-        } catch (NumberFormatException | UserManagementException e) {
+        } catch (NumberFormatException | UserManagementException | UserDoesNotExistException |
+                 InvalidCredentialsException e) {
             FlowableUsersLogger.errorMessage(this.getClass().getName(), e);
         }
         return flowableGroups;
@@ -175,7 +178,7 @@ public class LiferayUserManager implements UserEntityManager, Session {
                     userList.add(getFlowableUser(liferayUser));
                 }
                 return userList;
-            } catch (UserManagementException e) {
+            } catch (UserManagementException | InvalidCredentialsException e) {
                 FlowableUsersLogger.errorMessage(this.getClass().getName(), e);
             }
         }
@@ -220,7 +223,7 @@ public class LiferayUserManager implements UserEntityManager, Session {
                     userList.add(getFlowableUser(liferayUser));
                 }
                 return userList;
-            } catch (UserManagementException e) {
+            } catch (UserManagementException | InvalidCredentialsException e) {
                 FlowableUsersLogger.errorMessage(this.getClass().getName(), e);
             }
         }
@@ -297,7 +300,8 @@ public class LiferayUserManager implements UserEntityManager, Session {
         try {
             IUser<Long> liferayUser = authenticationService.getUserById(Long.parseLong(userId));
             return getFlowableUser(liferayUser);
-        } catch (NumberFormatException | UserManagementException e) {
+        } catch (NumberFormatException | UserManagementException | UserDoesNotExistException |
+                 InvalidCredentialsException e) {
             e.printStackTrace();
             FlowableUsersLogger.errorMessage(this.getClass().getName(), e);
         }
