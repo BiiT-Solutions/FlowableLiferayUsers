@@ -17,4 +17,9 @@ public class RoleActivities implements IRoleActivities {
 		return new HashSet<>();
 	}
 
+	@Override
+	public Set<IActivity> getRoleActivities(String s) {
+		return new HashSet<>();
+	}
+
 }
