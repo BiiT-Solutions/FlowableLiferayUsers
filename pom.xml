@@ -5,7 +5,7 @@
     <groupId>com.biit</groupId>
     <artifactId>flowable-liferay-users</artifactId>
     <packaging>jar</packaging>
-    <version>0.6.37-SNAPSHOT</version>
+    <version>0.6.39-SNAPSHOT</version>
     <name>Liferay users in Flowable</name>
 
     <parent>
