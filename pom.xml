@@ -29,8 +29,8 @@
     </distributionManagement>
 
     <scm>
-        <connection>scm:git:git.biit-solutions.com:BiiT/FlowableLiferayUsers.git</connection>
-        <developerConnection>scm:git:git.biit-solutions.com:BiiT/FlowableLiferayUsers.git</developerConnection>
+        <connection>scm:git:git.biit-solutions.com:Java/FlowableLiferayUsers.git</connection>
+        <developerConnection>scm:git:git.biit-solutions.com:Java/FlowableLiferayUsers.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
 
