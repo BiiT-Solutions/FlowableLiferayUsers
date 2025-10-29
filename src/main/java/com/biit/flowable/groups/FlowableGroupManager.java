@@ -1,5 +1,26 @@
 package com.biit.flowable.groups;
 
+/*-
+ * #%L
+ * Liferay users in Flowable
+ * %%
+ * Copyright (C) 2021 - 2025 BiiT Sourcing Solutions S.L.
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * #L%
+ */
+
 import com.biit.flowable.logger.FlowableUsersLogger;
 import com.biit.usermanager.entity.IRole;
 import com.biit.usermanager.entity.IUser;
@@ -41,7 +62,7 @@ public class FlowableGroupManager implements GroupEntityManager, Session {
     }
 
     public static GroupEntityImpl getFlowableGroup(IRole<Long> liferayRole, IGroupToActivityRoleConverter liferayToActivity) {
-        GroupEntityImpl flowableGroup = new GroupEntityImpl();
+        final GroupEntityImpl flowableGroup = new GroupEntityImpl();
         flowableGroup.setName(liferayToActivity.getGroupName(liferayRole));
         flowableGroup.setType(liferayToActivity.getFlowableGroup(liferayRole).getType());
         flowableGroup.setId(liferayRole.getUniqueId() + "");
@@ -52,10 +73,10 @@ public class FlowableGroupManager implements GroupEntityManager, Session {
 
     public GroupEntityImpl findGroupById(String roleId) {
         try {
-            IRole<Long> liferayUser = authorizationService.getRole(Long.parseLong(roleId));
+            final IRole<Long> liferayUser = authorizationService.getRole(Long.parseLong(roleId));
             return getFlowableGroup(liferayUser, groupToActivityConverter);
-        } catch (NumberFormatException | UserManagementException | RoleDoesNotExistsException |
-                 InvalidCredentialsException e) {
+        } catch (NumberFormatException | UserManagementException | RoleDoesNotExistsException
+                 | InvalidCredentialsException e) {
             FlowableUsersLogger.errorMessage(this.getClass().getName(), e);
         }
         return null;
@@ -63,17 +84,17 @@ public class FlowableGroupManager implements GroupEntityManager, Session {
 
     @Override
     public List<Group> findGroupsByUser(String userId) {
-        List<Group> flowableGroups = new ArrayList<>();
+        final List<Group> flowableGroups = new ArrayList<>();
 
-        IUser<Long> liferayUser;
+        final IUser<Long> liferayUser;
         try {
             liferayUser = authenticationService.getUserById(Long.parseLong(userId));
-            Set<IRole<Long>> liferayRoles = authorizationService.getUserRoles(liferayUser);
+            final Set<IRole<Long>> liferayRoles = authorizationService.getUserRoles(liferayUser);
             for (IRole<Long> liferayRole : liferayRoles) {
                 flowableGroups.add(FlowableGroupManager.getFlowableGroup(liferayRole, groupToActivityConverter));
             }
-        } catch (NumberFormatException | UserManagementException | UserDoesNotExistException |
-                 InvalidCredentialsException e) {
+        } catch (NumberFormatException | UserManagementException | UserDoesNotExistException
+                 | InvalidCredentialsException e) {
             FlowableUsersLogger.errorMessage(this.getClass().getName(), e);
         }
         return flowableGroups;
@@ -122,8 +143,8 @@ public class FlowableGroupManager implements GroupEntityManager, Session {
 
 
     public List<Group> findGroupByQueryCriteria(GroupQueryImpl query, Page page) {
-        List<Group> groupList = new ArrayList<org.flowable.idm.api.Group>();
-        GroupQueryImpl groupQuery = (GroupQueryImpl) query;
+        final List<Group> groupList = new ArrayList<>();
+        final GroupQueryImpl groupQuery = query;
         if (!StringUtils.isEmpty(groupQuery.getId())) {
             groupList.add(findGroupById(groupQuery.getId()));
             return groupList;
@@ -140,13 +161,13 @@ public class FlowableGroupManager implements GroupEntityManager, Session {
             groupList.addAll(findGroupsByUser(groupQuery.getUserId()));
             return groupList;
         } else if (!StringUtils.isEmpty(groupQuery.getType())) {
-            Set<IRole<Long>> roles = groupToActivityConverter.getRoles(GroupType.getGroupType(groupQuery.getType()));
+            final Set<IRole<Long>> roles = groupToActivityConverter.getRoles(GroupType.getGroupType(groupQuery.getType()));
             for (IRole<Long> role : roles) {
                 groupList.add(getFlowableGroup(role, groupToActivityConverter));
             }
             return groupList;
         } else {
-            Set<IRole<Long>> liferayRoles = groupToActivityConverter.getAllRoles();
+            final Set<IRole<Long>> liferayRoles = groupToActivityConverter.getAllRoles();
             for (IRole<Long> liferayRole : liferayRoles) {
                 groupList.add(getFlowableGroup(liferayRole, groupToActivityConverter));
             }

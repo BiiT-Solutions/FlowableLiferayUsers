@@ -1,12 +1,32 @@
 package com.biit.flowable.users;
 
+/*-
+ * #%L
+ * Liferay users in Flowable
+ * %%
+ * Copyright (C) 2021 - 2025 BiiT Sourcing Solutions S.L.
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * #L%
+ */
+
 
 import com.biit.flowable.groups.FlowableGroupManager;
 import com.biit.flowable.groups.IGroupToActivityRoleConverter;
 import com.biit.flowable.logger.FlowableUsersLogger;
 import com.biit.usermanager.entity.IRole;
 import com.biit.usermanager.entity.IUser;
-import com.biit.usermanager.security.IActivityManager;
 import com.biit.usermanager.security.IAuthenticationService;
 import com.biit.usermanager.security.IAuthorizationService;
 import com.biit.usermanager.security.exceptions.AuthenticationRequired;
@@ -60,7 +80,7 @@ public class LiferayUserManager implements UserEntityManager, Session {
         if (liferayUser == null) {
             return null;
         }
-        UserEntityImpl flowableUser = new UserEntityImpl();
+        final UserEntityImpl flowableUser = new UserEntityImpl();
         flowableUser.setEmail(liferayUser.getEmailAddress());
         flowableUser.setFirstName(liferayUser.getFirstName());
         flowableUser.setId(liferayUser.getUniqueId() + "");
@@ -75,10 +95,10 @@ public class LiferayUserManager implements UserEntityManager, Session {
 
     public UserEntity findUserById(String userId) {
         try {
-            IUser<Long> liferayUser = authenticationService.getUserById(Long.parseLong(userId));
+            final IUser<Long> liferayUser = authenticationService.getUserById(Long.parseLong(userId));
             return getFlowableUser(liferayUser);
-        } catch (NumberFormatException | UserManagementException | UserDoesNotExistException |
-                 InvalidCredentialsException e) {
+        } catch (NumberFormatException | UserManagementException | UserDoesNotExistException
+                 | InvalidCredentialsException e) {
             FlowableUsersLogger.errorMessage(this.getClass().getName(), e);
         }
         return null;
@@ -86,10 +106,10 @@ public class LiferayUserManager implements UserEntityManager, Session {
 
     private UserEntity findUserByEmail(String userEmail) {
         try {
-            IUser<Long> liferayUser = authenticationService.getUserByEmail(userEmail);
+            final IUser<Long> liferayUser = authenticationService.getUserByEmail(userEmail);
             return getFlowableUser(liferayUser);
-        } catch (NumberFormatException | UserManagementException | UserDoesNotExistException |
-                 InvalidCredentialsException e) {
+        } catch (NumberFormatException | UserManagementException | UserDoesNotExistException
+                 | InvalidCredentialsException e) {
             FlowableUsersLogger.errorMessage(this.getClass().getName(), e);
         }
         return null;
@@ -122,17 +142,17 @@ public class LiferayUserManager implements UserEntityManager, Session {
 
 
     public List<org.flowable.idm.api.Group> findGroupsByUser(String userId) {
-        List<org.flowable.idm.api.Group> flowableGroups = new ArrayList<>();
+        final List<org.flowable.idm.api.Group> flowableGroups = new ArrayList<>();
 
-        IUser<Long> liferayUser;
+        final IUser<Long> liferayUser;
         try {
             liferayUser = authenticationService.getUserById(Long.parseLong(userId));
-            Set<IRole<Long>> liferayRoles = authorizationService.getUserRoles(liferayUser);
+            final Set<IRole<Long>> liferayRoles = authorizationService.getUserRoles(liferayUser);
             for (IRole<Long> liferayRole : liferayRoles) {
                 flowableGroups.add(FlowableGroupManager.getFlowableGroup(liferayRole, groupToActivityConverter));
             }
-        } catch (NumberFormatException | UserManagementException | UserDoesNotExistException |
-                 InvalidCredentialsException e) {
+        } catch (NumberFormatException | UserManagementException | UserDoesNotExistException
+                 | InvalidCredentialsException e) {
             FlowableUsersLogger.errorMessage(this.getClass().getName(), e);
         }
         return flowableGroups;
@@ -140,7 +160,7 @@ public class LiferayUserManager implements UserEntityManager, Session {
 
 
     public Boolean checkPassword(String userId, String password) {
-        IUser<Long> liferayUser;
+        final IUser<Long> liferayUser;
         try {
             liferayUser = authenticationService.getUserById(Long.parseLong(userId));
             return authenticationService.authenticate(liferayUser.getEmailAddress(), password) != null;
@@ -162,8 +182,8 @@ public class LiferayUserManager implements UserEntityManager, Session {
 
     @Override
     public List<org.flowable.idm.api.User> findUserByQueryCriteria(UserQueryImpl query) {
-        List<org.flowable.idm.api.User> userList = new ArrayList<org.flowable.idm.api.User>();
-        UserQueryImpl userQuery = (UserQueryImpl) query;
+        final List<org.flowable.idm.api.User> userList = new ArrayList<org.flowable.idm.api.User>();
+        final UserQueryImpl userQuery = query;
         if (!StringUtils.isEmpty(userQuery.getId())) {
             userList.add(findUserById(userQuery.getId()));
             return userList;
@@ -171,7 +191,7 @@ public class LiferayUserManager implements UserEntityManager, Session {
             userList.add(findUserByEmail(userQuery.getEmail()));
             return userList;
         } else {
-            Set<IUser<Long>> liferayUsers;
+            final Set<IUser<Long>> liferayUsers;
             try {
                 liferayUsers = authorizationService.getAllUsers();
                 for (IUser<Long> liferayUser : liferayUsers) {
@@ -207,8 +227,8 @@ public class LiferayUserManager implements UserEntityManager, Session {
 
 
     public List<org.flowable.idm.api.User> findUserByQueryCriteria(UserQueryImpl query, Page page) {
-        List<org.flowable.idm.api.User> userList = new ArrayList<org.flowable.idm.api.User>();
-        UserQueryImpl userQuery = (UserQueryImpl) query;
+        final List<org.flowable.idm.api.User> userList = new ArrayList<org.flowable.idm.api.User>();
+        final UserQueryImpl userQuery = query;
         if (!StringUtils.isEmpty(userQuery.getId())) {
             userList.add(findUserById(userQuery.getId()));
             return userList;
@@ -216,7 +236,7 @@ public class LiferayUserManager implements UserEntityManager, Session {
             userList.add(findUserByEmail(userQuery.getEmail()));
             return userList;
         } else {
-            Set<IUser<Long>> liferayUsers;
+            final Set<IUser<Long>> liferayUsers;
             try {
                 liferayUsers = authorizationService.getAllUsers();
                 for (IUser<Long> liferayUser : liferayUsers) {
@@ -242,7 +262,7 @@ public class LiferayUserManager implements UserEntityManager, Session {
 
     @Override
     public Boolean checkPassword(String userId, String password, PasswordEncoder passwordEncoder, PasswordSalt passwordSalt) {
-        IUser<Long> liferayUser;
+        final IUser<Long> liferayUser;
         try {
             liferayUser = authenticationService.getUserById(Long.parseLong(userId));
             return authenticationService.authenticate(liferayUser.getEmailAddress(), password) != null;
@@ -298,11 +318,10 @@ public class LiferayUserManager implements UserEntityManager, Session {
     @Override
     public UserEntity findById(String userId) {
         try {
-            IUser<Long> liferayUser = authenticationService.getUserById(Long.parseLong(userId));
+            final IUser<Long> liferayUser = authenticationService.getUserById(Long.parseLong(userId));
             return getFlowableUser(liferayUser);
-        } catch (NumberFormatException | UserManagementException | UserDoesNotExistException |
-                 InvalidCredentialsException e) {
-            e.printStackTrace();
+        } catch (NumberFormatException | UserManagementException | UserDoesNotExistException
+                 | InvalidCredentialsException e) {
             FlowableUsersLogger.errorMessage(this.getClass().getName(), e);
         }
         return null;

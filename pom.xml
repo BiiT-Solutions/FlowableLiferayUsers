@@ -2,36 +2,50 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.biit</groupId>
+    <groupId>com.biit-solutions.flowable</groupId>
     <artifactId>flowable-liferay-users</artifactId>
     <packaging>jar</packaging>
     <version>0.6.46-SNAPSHOT</version>
     <name>Liferay users in Flowable</name>
 
     <parent>
-        <groupId>com.biit</groupId>
+        <groupId>com.biit-solutions</groupId>
         <artifactId>versions</artifactId>
-        <version>[0,1)</version>
+        <version>[1.0,1.1)</version>
         <relativePath /> <!-- lookup parent from repository -->
     </parent>
+
+    <licenses>
+        <license>
+            <name>GNU AGPL v3</name>
+            <url>https://www.gnu.org/licenses/agpl-3.0.html</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <organization>
+        <name>BiiT Sourcing Solutions S.L.</name>
+        <url>https://www.biit-solutions.com/</url>
+    </organization>
 
     <distributionManagement>
         <repository>
             <id>central</id>
-            <name>libs-releases</name>
-            <url>https://artifactory.biit-solutions.com/artifactory/libs-release</url>
+            <name>Maven Central</name>
+            <url>https://repo.maven.apache.org/maven2</url>
         </repository>
         <snapshotRepository>
-            <id>snapshots</id>
-            <name>libs-snapshot</name>
-            <url>https://artifactory.biit-solutions.com/artifactory/libs-snapshot</url>
+            <id>github</id>
+            <name>GitHub Packages</name>
+            <url>https://maven.pkg.github.com/BiiT-Solutions/FlowableLiferayUsers</url>
         </snapshotRepository>
     </distributionManagement>
 
     <scm>
-        <connection>scm:git:git.biit-solutions.com:Java/FlowableLiferayUsers.git</connection>
-        <developerConnection>scm:git:git.biit-solutions.com:Java/FlowableLiferayUsers.git</developerConnection>
-        <tag>HEAD</tag>
+        <connection>scm:git:ssh://git@github.com/BiiT-Solutions/FlowableLiferayUsers.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/BiiT-Solutions/FlowableLiferayUsers.git</developerConnection>
+        <url>https://github.com/BiiT-Solutions/FlowableLiferayUsers.git</url>
+        <tag>flowable-liferay-users</tag>
     </scm>
 
     <dependencies>
@@ -65,11 +79,11 @@
 
         <!-- Liferay Authentication -->
         <dependency>
-            <groupId>com.biit.liferay</groupId>
+            <groupId>com.biit-solutions.liferay</groupId>
             <artifactId>liferay-authentication-client</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.biit.liferay</groupId>
+            <groupId>com.biit-solutions.liferay</groupId>
             <artifactId>liferay-service-common</artifactId>
         </dependency>
         <!-- Database -->
@@ -98,16 +112,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.hibernate</groupId>
+            <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-ehcache</artifactId>
-            <version>${hibernate.version}</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>${hibernate.version}</version>
-            <scope>runtime</scope>
         </dependency>
         <!-- Hibernate log -->
         <dependency>
@@ -248,6 +255,31 @@
                         <checkModificationExclude>pom.xml</checkModificationExclude>
                     </checkModificationExcludes>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <version>${license-maven-plugin.version}</version>
+                <configuration>
+                    <organizationName>BiiT Sourcing Solutions S.L.</organizationName>
+                    <inceptionYear>2021</inceptionYear>
+                    <licenseName>agpl_v3</licenseName>
+                    <excludes>
+                        <exclude>**/*.properties</exclude>
+                        <exclude>**/*.xml</exclude>
+                        <exclude>**/*.xhtml</exclude>
+                        <exclude>**/*.json</exclude>
+                    </excludes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>first</id>
+                        <goals>
+                            <goal>update-file-header</goal>
+                        </goals>
+                        <phase>package</phase>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
